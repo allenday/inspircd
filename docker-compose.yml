@@ -3,12 +3,14 @@ mysql:
   volumes:
     #- "./schema.sql:/var/lib/mysqldump.sql"
     - "./mysqldump.sql:/var/lib/mysqldump.sql"
-  command: "mysqld"
+  command: "mysqld --user=root --explicit_defaults_for_timestamp=TRUE"
   environment:
     MYSQL_DATABASE: irc
     MYSQL_USER: irc
     MYSQL_PASSWORD: password
     MYSQL_ROOT_PASSWORD: secret
+  ports:
+    - 3306:3306
 
 ircd:  
   image: "cloudposse/inspircd"
@@ -60,5 +62,3 @@ anope:
     ANOPE_SERVERINFO_NAME: "anope.localhost"
     ANOPE_SALT: "secret"
     ANOPE_URL: "http://localhost/register/"
-
-
